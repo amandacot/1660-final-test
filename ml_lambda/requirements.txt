@@ -1,0 +1,6 @@
+pandas
+numpy
+xgboost
+cffi
+requests
+scikit-learn

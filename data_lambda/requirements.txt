@@ -1,0 +1,6 @@
+pandas
+requests
+fredapi
+boto3
+cffi
+curl-cffi
