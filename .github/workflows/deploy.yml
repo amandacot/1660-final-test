@@ -25,9 +25,9 @@ jobs:
             --template-file infra/template.yaml \
             --stack-name playing-the-market-self \
             --capabilities CAPABILITY_NAMED_IAM \
-            --parameter-overrides FrontendBucketName=playing-the-market-frontend-self-1234
+            --parameter-overrides FrontendBucketName=playing-the-market-frontend-amandacot-self-01
 
       - name: Sync frontend to S3
         run: |
-          aws s3 sync frontend/ s3://playing-the-market-frontend-self-1234 --delete
+          aws s3 sync frontend/ s3://playing-the-market-frontend-amandacot-self-01 --delete
 
