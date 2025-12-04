@@ -22,12 +22,26 @@ jobs:
       - name: Deploy CloudFormation stack
         run: |
           aws cloudformation deploy \
-            --template-file infra/template.yaml \
-            --stack-name playing-the-market-self \
+            --template-file infra/template.yml \
+            --stack-name playing-the-market \
             --capabilities CAPABILITY_NAMED_IAM \
-            --parameter-overrides FrontendBucketName=playing-the-market-frontend-amandacot-self-01
+            --parameter-overrides FrontendBucketName=playing-the-market-frontend-amandacot-1234
 
       - name: Sync frontend to S3
         run: |
-          aws s3 sync frontend/ s3://playing-the-market-frontend-amandacot-self-01 --delete
+          aws s3 sync frontend/ s3://playing-the-market-frontend-amandacot-1234 --delete
+     # 3. Set up Docker Buildx (needed for multi-platform builds)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
+      # 4. Log in to AWS ECR
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 736116164611.dkr.ecr.us-east-2.amazonaws.com
+
+      # 5. Run deployment script
+      - name: Deploy AWS resources
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh
+          
